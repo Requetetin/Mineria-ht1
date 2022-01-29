@@ -7,3 +7,5 @@ print(
 )
 
 print(movies.describe())
+print("\n\n\n")
+print(movies.head())
