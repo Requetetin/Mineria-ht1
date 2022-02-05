@@ -1,4 +1,4 @@
-from numpy import NaN
+from numpy import *
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -14,50 +14,76 @@ movies = pd.read_csv("./movies.csv", encoding="latin1")
 
 #------------------ Preguntas ------------------
 #4.1 mas presupuesto
-budget = movies.nlargest(10, 'budget')['title']
-print("Las 10 peliculas con mas presupuestos fueron \n", budget)
-#4.2
-revenues = movies.nlargest(10, 'revenue')['title']
-print("Las 10 peliculas con mas ingresos fueron \n", revenues)
-#4.3
-mostVoted = movies.nlargest(1, 'voteCount')['title']
-print("La pelicula con mas votos fue: \n", mostVoted)
-#4.4
-worst = movies.nsmallest(1, 'voteAvg')['title']
-print("La peor pelicula segun los votos de los usuarios es:  \n", worst)
-#4.5
-movies['releaseDate'] = pd.to_datetime(movies['releaseDate'])
-yearly = movies['releaseDate'].dt.year.value_counts()
-yearly.plot.bar()
-#4.6
-genres = movies['genres'].str.split('|', n=-1)
-genres
+# budget = movies.nlargest(10, 'budget')['title']
+# print("Las 10 peliculas con mas presupuestos fueron \n", budget)
+# #4.2
+# revenues = movies.nlargest(10, 'revenue')['title']
+# print("Las 10 peliculas con mas ingresos fueron \n", revenues)
+# #4.3
+# mostVoted = movies.nlargest(1, 'voteCount')['title']
+# print("La pelicula con mas votos fue: \n", mostVoted)
+# #4.4
+# worst = movies.nsmallest(1, 'voteAvg')['title']
+# print("La peor pelicula segun los votos de los usuarios es:  \n", worst)
+# #4.5
+# movies['releaseDate'] = pd.to_datetime(movies['releaseDate'])
+# yearly = movies['releaseDate'].dt.year.value_counts()
+# yearly.plot.bar()
+# #4.6
+# genres = movies['genres'].str.split('|', n=-1)
+# genres
+
+#4.7
+# movies['mainGenre'] = movies['genres'].str.split('|').str[0]
+# print(movies.nlargest(10, 'revenue')['mainGenre'])
+# print('\n\n', movies['mainGenre'].value_counts())
 
 #4.9
-movies.castWomenAmount.replace('.*', regex=True, value=NaN)
-movies.sort_values("castWomenAmount", inplace = True)
-print(movies.castWomenAmount)
-# movies.castWomenAmount.where(movies.castWomenAmount > 100 , NaN)
+castWomen = list(movies['castWomenAmount'])
+castMen = list(movies['castMenAmount'])
+revenueList = list(movies['revenue'])
+ratings = list(movies['popularity'])
 
-# plt.scatter(movies.revenue, movies.castWomenAmount)
-# plt.ylabel('Mujeres en el reparto')
-# plt.xlabel('Ganancias')
-# plt.show()
+realW, realM, respectiveRev, respectiveRat = [], [], [], []
+totalCast = movies.loc[:, ['castWomenAmount', 'castMenAmount', 'revenue', 'popularity']]
 
-# plt.scatter(movies.revenue, movies.castMenAmount)
-# plt.ylabel('Hombres en el reparto')
-# plt.xlabel('Ganancias')
-# plt.show()
+for i in range(len(castWomen)):
+  try:
+    cwomen = int(castWomen[i])
+    cmen = int(castMen[i])
+    revenue = revenueList[i]
+    popularity = ratings[i]
+    if cwomen < 100 and cmen < 100:
+      realW.append(cwomen)
+      realM.append(cmen)
+      respectiveRev.append(revenue)
+      respectiveRat.append(popularity)
+  except:
+    continue
 
-# plt.scatter(movies.voteAvg, movies.castWomenAmount)
-# plt.ylabel('Mujeres en el reparto')
-# plt.xlabel('Ratings')
-# plt.show()
+plt.scatter(respectiveRev,realW)
+plt.ylabel('Mujeres en el reparto')
+plt.xlabel('Ganancias')
+plt.show()
+print(corrcoef(respectiveRev,realW))
 
-# plt.scatter(movies.voteAvg, movies.castMenAmount)
-# plt.ylabel('Mujeres en el reparto')
-# plt.xlabel('Rating')
-# plt.show()
+plt.scatter(respectiveRev, realM)
+plt.ylabel('Hombres en el reparto')
+plt.xlabel('Ganancias')
+plt.show()
+print(corrcoef(respectiveRev,realM))
+
+plt.scatter(respectiveRat, realW)
+plt.ylabel('Mujeres en el reparto')
+plt.xlabel('Ratings')
+plt.show()
+print(corrcoef(respectiveRat,realW))
+
+plt.scatter(respectiveRat, realM)
+plt.ylabel('Mujeres en el reparto')
+plt.xlabel('Rating')
+plt.show()
+print(corrcoef(respectiveRat,realM))
 
 # #4.11
 # plt.scatter(movies.budget, movies.revenue)
