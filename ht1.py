@@ -32,7 +32,6 @@ movies = pd.read_csv("./movies.csv", encoding="latin1")
 # #4.6
 # genres = movies['genres'].str.split('|', n=-1)
 # genres
-
 #4.7
 # movies['mainGenre'] = movies['genres'].str.split('|').str[0]
 # print(movies.nlargest(10, 'revenue')['mainGenre'])
@@ -124,6 +123,17 @@ movies = pd.read_csv("./movies.csv", encoding="latin1")
 # plt.ylabel('Ganancias')
 # plt.xlabel('Presupuesto')
 
+# #4.10
+# print(movies.nlargest(20, 'voteAvg')['director'])
+
+# #4.12
+# movies['month'] = movies['releaseDate'].dt.month
+# movies.sort_values('revenue', ascending=False)[['title', 'revenue', 'month']].head(20)
+
+# #4.13
+# movies['releaseDate'] = pd.to_datetime(movies['releaseDate'])
+# yearly = movies['releaseDate'].dt.month.value_counts()
+# yearly.plot.bar()
 
 # plt.hist(movies.revenue)
 # plt.ylabel('Ganancias')
@@ -133,7 +143,7 @@ movies = pd.read_csv("./movies.csv", encoding="latin1")
 # plt.show()
 #print("Correlacion entre presupuesto y ganancias", movies.revenue.corr(movies.budget))
 
-#4.14
+# #4.14
 # popularity = movies["popularity"]
 # revenue = movies["revenue"]
 # voteAvg = movies["voteAvg"]
