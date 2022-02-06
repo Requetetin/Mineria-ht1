@@ -38,52 +38,86 @@ movies = pd.read_csv("./movies.csv", encoding="latin1")
 # print(movies.nlargest(10, 'revenue')['mainGenre'])
 # print('\n\n', movies['mainGenre'].value_counts())
 
-#4.9
-castWomen = list(movies['castWomenAmount'])
-castMen = list(movies['castMenAmount'])
-revenueList = list(movies['revenue'])
-ratings = list(movies['popularity'])
+# #4.8
+# movies['releaseDate'] = pd.to_datetime(movies['releaseDate'])
+# movies['yearOfRelease'] = movies['releaseDate'].dt.year
 
-realW, realM, respectiveRev, respectiveRat = [], [], [], []
-totalCast = movies.loc[:, ['castWomenAmount', 'castMenAmount', 'revenue', 'popularity']]
+# castActors = list(movies['actorsAmount'])
+# revenueList = list(movies['revenue'])
+# yearList = list(movies['yearOfRelease'])
 
-for i in range(len(castWomen)):
-  try:
-    cwomen = int(castWomen[i])
-    cmen = int(castMen[i])
-    revenue = revenueList[i]
-    popularity = ratings[i]
-    if cwomen < 100 and cmen < 100:
-      realW.append(cwomen)
-      realM.append(cmen)
-      respectiveRev.append(revenue)
-      respectiveRat.append(popularity)
-  except:
-    continue
+# realCast, realRevenue, realYear = [], [], []
 
-plt.scatter(respectiveRev,realW)
-plt.ylabel('Mujeres en el reparto')
-plt.xlabel('Ganancias')
-plt.show()
-print(corrcoef(respectiveRev,realW))
+# for i in range(len(castActors)):
+#   try:
+#     totalCast = int(castActors[i])
+#     revenue = revenueList[i]
+#     year = yearList[i]
+#     if totalCast < 100:
+#       realCast.append(totalCast)
+#       realRevenue.append(revenue)
+#       realYear.append(year)
+#   except:
+#     continue
 
-plt.scatter(respectiveRev, realM)
-plt.ylabel('Hombres en el reparto')
-plt.xlabel('Ganancias')
-plt.show()
-print(corrcoef(respectiveRev,realM))
+# plt.scatter(realRevenue, realCast)
+# plt.ylabel('Actores en el reparto')
+# plt.xlabel('Ganancias')
+# plt.show()
+# print(corrcoef(realRevenue,realCast))
 
-plt.scatter(respectiveRat, realW)
-plt.ylabel('Mujeres en el reparto')
-plt.xlabel('Ratings')
-plt.show()
-print(corrcoef(respectiveRat,realW))
+# plt.scatter(realCast, realYear)
+# plt.xlabel('Actores en el reparto')
+# plt.ylabel('Year')
+# plt.show()
 
-plt.scatter(respectiveRat, realM)
-plt.ylabel('Mujeres en el reparto')
-plt.xlabel('Rating')
-plt.show()
-print(corrcoef(respectiveRat,realM))
+
+
+# #4.9
+# castWomen = list(movies['castWomenAmount'])
+# castMen = list(movies['castMenAmount'])
+# revenueList = list(movies['revenue'])
+# ratings = list(movies['popularity'])
+
+# realW, realM, respectiveRev, respectiveRat = [], [], [], []
+
+# for i in range(len(castWomen)):
+#   try:
+#     cwomen = int(castWomen[i])
+#     cmen = int(castMen[i])
+#     revenue = revenueList[i]
+#     popularity = ratings[i]
+#     if cwomen < 100 and cmen < 100:
+#       realW.append(cwomen)
+#       realM.append(cmen)
+#       respectiveRev.append(revenue)
+#       respectiveRat.append(popularity)
+#   except:
+#     continue
+
+# plt.scatter(respectiveRev,realW)
+# plt.ylabel('Mujeres en el reparto')
+# plt.xlabel('Ganancias')
+# plt.show()
+# print(corrcoef(respectiveRev,realW))
+
+# plt.scatter(respectiveRev, realM)
+# plt.ylabel('Hombres en el reparto')
+# plt.xlabel('Ganancias')
+# plt.show()
+# print(corrcoef(respectiveRev,realM))
+
+# plt.scatter(respectiveRat, realW)
+# plt.ylabel('Mujeres en el reparto')
+# plt.xlabel('Ratings')
+# plt.show()
+# print(corrcoef(respectiveRat,realW))
+
+# plt.scatter(respectiveRat, realM)
+# plt.ylabel('Mujeres en el reparto')
+# plt.xlabel('Rating')
+# plt.show()
+# print(corrcoef(respectiveRat,realM))
 
 # #4.11
 # plt.scatter(movies.budget, movies.revenue)
